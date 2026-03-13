@@ -21,6 +21,7 @@ export const projects: Project[] = [
     longDescription:
       'A comprehensive Flutter application template designed for enterprise-grade projects. Features a feature-first clean architecture, BLoC state management, complete auth flow with RBAC, responsive design system with 14+ components, internationalization, mock mode for rapid development, and CI/CD pipeline. Supports Android, iOS, Web, macOS, Linux, and Windows from a single codebase.',
     github: 'https://github.com/dartpilot/flutter-enterprise-starter',
+    demo: 'https://cevheri.github.io/flutter-bloc-advanced',
     deepwiki: 'https://deepwiki.com/dartpilot/flutter-enterprise-starter',
     techStack: [
       { name: 'Flutter 3.41', icon: 'simple-icons:flutter' },

@@ -18,7 +18,8 @@
     "title": "Build production-ready Flutter apps, faster.",
     "subtitle": "Open-source templates and tools for the Flutter/Dart ecosystem",
     "cta": "Get Started",
-    "github": "View on GitHub"
+    "github": "View on GitHub",
+    "demo": "Live Demo"
   },
   "stats": {
     "tests": "Tests",

@@ -54,6 +54,12 @@ const quickStartSteps = [
               <Icon name="simple-icons:github" class="h-5 w-5" />
               View on GitHub
             </Button>
+            {project.demo && (
+              <Button href={project.demo} variant="ghost" size="lg" external>
+                <Icon name="lucide:play" class="h-5 w-5" />
+                Live Demo
+              </Button>
+            )}
             {project.deepwiki && (
               <Button href={project.deepwiki} variant="ghost" size="lg" external>
                 <Icon name="lucide:book-open" class="h-5 w-5" />

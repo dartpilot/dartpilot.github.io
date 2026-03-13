@@ -35,7 +35,7 @@ cd flutter-enterprise-starter
 flutter pub get && flutter run
 ```
 
-<a href="https://github.com/dartpilot/flutter-enterprise-starter">View Repository →</a>
+<a href="https://cevheri.github.io/flutter-bloc-advanced">Live Demo</a> · <a href="https://github.com/dartpilot/flutter-enterprise-starter">View Repository →</a>
 
 ---
 
