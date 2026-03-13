@@ -1,0 +1,137 @@
+{
+  "site": {
+    "title": "dartpilot — Flutter/Dart Open Source",
+    "description": "Open-source templates and tools for the Flutter/Dart ecosystem. Production-ready, clean architecture, BLoC pattern."
+  },
+  "nav": {
+    "projects": "Projects",
+    "docs": "Docs",
+    "community": "Community",
+    "blog": "Blog",
+    "github": "GitHub",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "skipToContent": "Skip to content",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Build production-ready Flutter apps, faster.",
+    "subtitle": "Open-source templates and tools for the Flutter/Dart ecosystem",
+    "cta": "Get Started",
+    "github": "View on GitHub"
+  },
+  "stats": {
+    "tests": "Tests",
+    "platforms": "Platforms",
+    "components": "Components",
+    "license": "MIT Licensed"
+  },
+  "features": {
+    "title": "Everything you need to ship",
+    "architecture": "Feature-First Clean Architecture",
+    "architectureDesc": "Modular, scalable project structure with clear boundaries between features, domain, and infrastructure layers.",
+    "bloc": "BLoC State Management",
+    "blocDesc": "Predictable state management with BLoC pattern, use cases, and equatable states.",
+    "auth": "Auth & RBAC",
+    "authDesc": "Complete authentication flow with role-based access control out of the box.",
+    "responsive": "Responsive Design System",
+    "responsiveDesc": "14+ reusable components, adaptive layouts for mobile, tablet, and desktop.",
+    "i18n": "Internationalization",
+    "i18nDesc": "Built-in i18n support with ARB files and code generation.",
+    "mock": "Mock Mode",
+    "mockDesc": "Develop and test with mock data — no backend required.",
+    "cicd": "CI/CD Pipeline",
+    "cicdDesc": "GitHub Actions for build, test, and deployment automation."
+  },
+  "platforms": {
+    "title": "One codebase, six platforms",
+    "subtitle": "Build once, deploy everywhere with full platform support.",
+    "android": "Android",
+    "ios": "iOS",
+    "web": "Web",
+    "macos": "macOS",
+    "linux": "Linux",
+    "windows": "Windows"
+  },
+  "screenshots": {
+    "title": "See it in action",
+    "webDark": "Web Dark",
+    "webLight": "Web Light",
+    "mobileLogin": "Mobile Login",
+    "mobileEdit": "Mobile Edit"
+  },
+  "codePreview": {
+    "title": "Clean, predictable patterns"
+  },
+  "getStarted": {
+    "title": "Clone. Run. Ship.",
+    "subtitle": "Get up and running in under a minute.",
+    "cta": "Start Building"
+  },
+  "community": {
+    "title": "Built by the community, for the community",
+    "subtitle": "Join the growing dartpilot community and help shape the future of Flutter development.",
+    "cta": "Become a Contributor"
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Open-source tools and templates for the Flutter/Dart ecosystem.",
+    "viewProject": "View Project",
+    "viewOnGithub": "View on GitHub"
+  },
+  "projectDetail": {
+    "quickStart": "Quick Start",
+    "techStack": "Tech Stack",
+    "screenshots": "Screenshots",
+    "architecture": "Architecture",
+    "links": "Links"
+  },
+  "docs": {
+    "title": "Documentation",
+    "subtitle": "Guides, references, and resources to help you build with dartpilot templates.",
+    "gettingStarted": "Getting Started",
+    "deepwiki": "Deep Wiki",
+    "deepwikiDesc": "AI-powered documentation explorer for the entire codebase.",
+    "contributing": "Contributing Guide"
+  },
+  "communityPage": {
+    "title": "Community",
+    "subtitle": "dartpilot is built by developers who care about quality Flutter tooling.",
+    "contributors": "Contributors",
+    "howToContribute": "How to Contribute",
+    "step1": "Fork the repository",
+    "step2": "Create your feature branch",
+    "step3": "Write tests for your changes",
+    "step4": "Submit a pull request",
+    "codeOfConduct": "Code of Conduct",
+    "authorSpotlight": "Author"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Updates, tutorials, and insights from the dartpilot team.",
+    "readMore": "Read more",
+    "minRead": "min read",
+    "allPosts": "All posts",
+    "tags": "Tags"
+  },
+  "about": {
+    "title": "About dartpilot",
+    "mission": "Our mission is to accelerate Flutter development by providing production-ready, open-source templates and tools that follow best practices.",
+    "author": "Created by",
+    "authorName": "Mehmet Cevheri BOZOGLAN",
+    "authorBio": "Software engineer passionate about Flutter, clean architecture, and open-source development."
+  },
+  "footer": {
+    "tagline": "Open-source templates and tools for the Flutter/Dart ecosystem.",
+    "navigation": "Navigation",
+    "resources": "Resources",
+    "connect": "Connect",
+    "copyright": "© {year} dartpilot. All rights reserved.",
+    "builtWith": "Built with Astro"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "cta": "Go home"
+  }
+}

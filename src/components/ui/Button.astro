@@ -1,0 +1,46 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  external?: boolean;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  external = false,
+  ...rest
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+
+const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500';
+
+const variants = {
+  primary: 'bg-indigo-500 text-white hover:bg-indigo-600 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40',
+  secondary: 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700',
+  ghost: 'border border-zinc-300 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-300 dark:hover:bg-zinc-800/50',
+};
+
+const sizes = {
+  sm: 'px-3.5 py-2 text-sm',
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3.5 text-base',
+};
+
+const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
+---
+
+<Tag
+  href={href}
+  class={classes}
+  {...external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+  {...rest}
+>
+  <slot />
+</Tag>

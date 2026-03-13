@@ -1,0 +1,63 @@
+---
+import PageLayout from './PageLayout.astro';
+import { formatDate, readingTime } from '../lib/utils';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    description: string;
+    date: string;
+    author?: string;
+    tags?: string[];
+    ogImage?: string;
+  };
+  rawContent: () => string;
+}
+
+const { frontmatter, rawContent } = Astro.props;
+const date = new Date(frontmatter.date);
+const minutes = readingTime(rawContent());
+---
+
+<PageLayout title={`${frontmatter.title} — dartpilot`} description={frontmatter.description} ogImage={frontmatter.ogImage}>
+  <article class="mx-auto max-w-3xl px-6 py-20">
+    <header class="mb-12">
+      <div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+        <time datetime={date.toISOString()}>{formatDate(date)}</time>
+        <span>&middot;</span>
+        <span>{minutes} min read</span>
+        {frontmatter.tags && (
+          <>
+            <span>&middot;</span>
+            <div class="flex gap-2">
+              {frontmatter.tags.map((tag: string) => (
+                <span class="rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
+        {frontmatter.title}
+      </h1>
+      {frontmatter.description && (
+        <p class="mt-4 text-lg text-zinc-600 dark:text-zinc-400">{frontmatter.description}</p>
+      )}
+    </header>
+
+    <div class="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-indigo-500 prose-a:no-underline hover:prose-a:underline prose-code:before:content-none prose-code:after:content-none">
+      <slot />
+    </div>
+
+    <footer class="mt-16 border-t border-zinc-200 pt-8 dark:border-zinc-800">
+      <a
+        href="/blog/"
+        class="inline-flex items-center gap-2 text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-400"
+      >
+        &larr; Back to blog
+      </a>
+    </footer>
+  </article>
+</PageLayout>

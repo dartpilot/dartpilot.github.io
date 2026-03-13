@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dartpilot.dev/sitemap-index.xml

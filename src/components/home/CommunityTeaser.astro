@@ -1,0 +1,33 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import ScrollReveal from '../ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+
+const locale = getLocale(Astro.url);
+---
+
+<section class="py-20 sm:py-28 bg-zinc-50 dark:bg-zinc-900/50">
+  <div class="mx-auto max-w-7xl px-6">
+    <ScrollReveal>
+      <div class="mx-auto max-w-3xl text-center">
+        <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-500 dark:bg-indigo-950/50 dark:text-indigo-400">
+          <Icon name="lucide:users" class="h-7 w-7" />
+        </div>
+        <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
+          {t('community.title', locale)}
+        </h2>
+        <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
+          {t('community.subtitle', locale)}
+        </p>
+
+        <div class="mt-10">
+          <Button href="/community/" variant="primary" size="lg">
+            <Icon name="lucide:heart-handshake" class="h-5 w-5" />
+            {t('community.cta', locale)}
+          </Button>
+        </div>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>

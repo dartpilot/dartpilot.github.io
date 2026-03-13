@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from '../ui/Button.astro';
+import ScrollReveal from '../ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+
+const locale = getLocale(Astro.url);
+
+const steps = [
+  'git clone https://github.com/dartpilot/flutter-enterprise-starter.git',
+  'cd flutter-enterprise-starter && fvm use',
+  'flutter run --target lib/main/main_local.dart',
+];
+---
+
+<section class="py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6">
+    <ScrollReveal>
+      <div class="mx-auto max-w-3xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
+          {t('getStarted.title', locale)}
+        </h2>
+        <p class="mt-4 text-lg text-zinc-500 dark:text-zinc-400">
+          {t('getStarted.subtitle', locale)}
+        </p>
+
+        <!-- Terminal -->
+        <div class="mt-10 overflow-hidden rounded-2xl border border-zinc-200 text-left shadow-2xl dark:border-zinc-700">
+          <div class="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="flex gap-1.5">
+              <div class="h-3 w-3 rounded-full bg-red-400" />
+              <div class="h-3 w-3 rounded-full bg-yellow-400" />
+              <div class="h-3 w-3 rounded-full bg-green-400" />
+            </div>
+            <span class="ml-2 text-xs text-zinc-500 dark:text-zinc-400">Terminal</span>
+          </div>
+          <div class="bg-zinc-900 p-6 font-mono text-sm">
+            {steps.map((step, i) => (
+              <div class:list={['flex items-start gap-2', i > 0 && 'mt-2']}>
+                <span class="select-none text-indigo-400">$</span>
+                <span class="text-zinc-300">{step}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="mt-10">
+          <Button href="/projects/flutter-enterprise-starter/" variant="primary" size="lg">
+            <Icon name="lucide:rocket" class="h-5 w-5" />
+            {t('getStarted.cta', locale)}
+          </Button>
+        </div>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>

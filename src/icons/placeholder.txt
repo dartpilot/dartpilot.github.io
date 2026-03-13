@@ -1,0 +1,2 @@
+This directory is for custom SVG icons used by astro-icon.
+Iconify packages (@iconify-json/lucide, @iconify-json/simple-icons) provide most icons.

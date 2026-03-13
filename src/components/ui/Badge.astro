@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant?: 'default' | 'indigo' | 'green';
+  class?: string;
+}
+
+const { variant = 'default', class: className = '' } = Astro.props;
+
+const variants = {
+  default: 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300',
+  indigo: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400',
+  green: 'bg-emerald-50 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium',
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+</span>

@@ -1,0 +1,77 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Card from '../../components/ui/Card.astro';
+import Badge from '../../components/ui/Badge.astro';
+import ScrollReveal from '../../components/ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+import { formatDate, readingTime } from '../../lib/utils';
+
+const locale = getLocale(Astro.url);
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<PageLayout title="Blog — dartpilot" description="Updates, tutorials, and insights from the dartpilot team.">
+  <section class="pt-32 pb-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <SectionHeading
+          title={t('blog.title', locale)}
+          subtitle={t('blog.subtitle', locale)}
+        />
+      </ScrollReveal>
+
+      {posts.length === 0 ? (
+        <div class="mx-auto max-w-2xl text-center py-20">
+          <Icon name="lucide:pen-line" class="mx-auto h-12 w-12 text-zinc-300 dark:text-zinc-600 mb-4" />
+          <p class="text-zinc-500 dark:text-zinc-400">
+            Blog posts coming soon. Stay tuned!
+          </p>
+        </div>
+      ) : (
+        <div class="mx-auto max-w-4xl space-y-6">
+          {posts.map((post, i) => (
+            <ScrollReveal delay={i * 100}>
+              <a href={`/blog/${post.id}/`} class="block group">
+                <Card>
+                  <div class="flex flex-col gap-3">
+                    <div class="flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+                      <time datetime={post.data.date.toISOString()}>
+                        {formatDate(post.data.date)}
+                      </time>
+                      {post.data.tags.length > 0 && (
+                        <>
+                          <span>&middot;</span>
+                          <div class="flex gap-2">
+                            {post.data.tags.map((tag: string) => (
+                              <Badge variant="indigo">{tag}</Badge>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <h2 class="text-xl font-bold text-zinc-900 dark:text-white group-hover:text-indigo-500 transition-colors">
+                      {post.data.title}
+                    </h2>
+                    <p class="text-zinc-600 dark:text-zinc-400">
+                      {post.data.description}
+                    </p>
+                    <span class="inline-flex items-center gap-1 text-sm font-medium text-indigo-500">
+                      {t('blog.readMore', locale)}
+                      <Icon name="lucide:arrow-right" class="h-4 w-4" />
+                    </span>
+                  </div>
+                </Card>
+              </a>
+            </ScrollReveal>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</PageLayout>

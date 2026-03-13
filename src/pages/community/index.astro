@@ -1,0 +1,170 @@
+---
+import { Icon } from 'astro-icon/components';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+import ScrollReveal from '../../components/ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+import { SITE } from '../../lib/constants';
+import { getContributors } from '../../lib/github';
+
+const locale = getLocale(Astro.url);
+const contributors = await getContributors();
+
+const steps = [
+  { icon: 'lucide:git-fork', text: 'communityPage.step1' },
+  { icon: 'lucide:git-branch', text: 'communityPage.step2' },
+  { icon: 'lucide:test-tube', text: 'communityPage.step3' },
+  { icon: 'lucide:git-pull-request', text: 'communityPage.step4' },
+];
+---
+
+<PageLayout title="Community — dartpilot" description="Join the dartpilot community and help shape the future of Flutter development.">
+  <!-- Hero -->
+  <section class="pt-32 pb-16">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <SectionHeading
+          title={t('communityPage.title', locale)}
+          subtitle={t('communityPage.subtitle', locale)}
+        />
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Contributor Wall -->
+  {contributors.length > 0 && (
+    <section class="py-16 bg-zinc-50 dark:bg-zinc-900/50">
+      <div class="mx-auto max-w-7xl px-6">
+        <ScrollReveal>
+          <div class="mx-auto max-w-4xl">
+            <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-8 text-center">
+              {t('communityPage.contributors', locale)}
+            </h2>
+            <div class="flex flex-wrap justify-center gap-3">
+              {contributors.map((contributor) => (
+                <a
+                  href={contributor.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group relative"
+                  title={`${contributor.login} (${contributor.contributions} contributions)`}
+                >
+                  <img
+                    src={`${contributor.avatarUrl}&s=80`}
+                    alt={contributor.login}
+                    class="h-14 w-14 rounded-full border-2 border-zinc-200 transition-all group-hover:scale-110 group-hover:border-indigo-500 dark:border-zinc-700"
+                    loading="lazy"
+                  />
+                </a>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )}
+
+  <!-- How to Contribute -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <div class="mx-auto max-w-3xl">
+          <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-8 text-center">
+            {t('communityPage.howToContribute', locale)}
+          </h2>
+          <div class="space-y-4">
+            {steps.map((step, i) => (
+              <ScrollReveal delay={i * 100}>
+                <Card hover={false}>
+                  <div class="flex items-center gap-4">
+                    <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-500 dark:bg-indigo-950/50 dark:text-indigo-400">
+                      <span class="text-sm font-bold">{i + 1}</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                      <Icon name={step.icon} class="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
+                      <span class="font-medium text-zinc-700 dark:text-zinc-300">
+                        {t(step.text, locale)}
+                      </span>
+                    </div>
+                  </div>
+                </Card>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div class="mt-8 text-center">
+            <Button href={`${SITE.github.repo}/blob/main/CONTRIBUTING.md`} variant="primary" size="lg" external>
+              <Icon name="lucide:book-open" class="h-5 w-5" />
+              Read Contributing Guide
+            </Button>
+          </div>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Author Spotlight -->
+  <section class="py-16 bg-zinc-50 dark:bg-zinc-900/50">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <div class="mx-auto max-w-3xl">
+          <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-6 text-center">
+            {t('communityPage.authorSpotlight', locale)}
+          </h2>
+          <Card padding="lg" hover={false}>
+            <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left sm:gap-6">
+              <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950/50">
+                <Icon name="lucide:user" class="h-8 w-8 text-indigo-500" />
+              </div>
+              <div>
+                <h3 class="text-lg font-bold text-zinc-900 dark:text-white">
+                  {t('about.authorName', locale)}
+                </h3>
+                <p class="mt-1 text-zinc-600 dark:text-zinc-400">
+                  {t('about.authorBio', locale)}
+                </p>
+                <a
+                  href={SITE.author.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-indigo-500 hover:text-indigo-600"
+                >
+                  <Icon name="simple-icons:github" class="h-4 w-4" />
+                  @cevheri
+                </a>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Code of Conduct -->
+  <section class="py-16">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <div class="mx-auto max-w-3xl text-center">
+          <Icon name="lucide:heart" class="mx-auto h-8 w-8 text-indigo-500 mb-4" />
+          <h2 class="text-xl font-bold text-zinc-900 dark:text-white">
+            {t('communityPage.codeOfConduct', locale)}
+          </h2>
+          <p class="mt-2 text-zinc-500 dark:text-zinc-400">
+            We are committed to providing a welcoming and inclusive experience for everyone.
+          </p>
+          <a
+            href={`${SITE.github.repo}/blob/main/CODE_OF_CONDUCT.md`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-indigo-500 hover:text-indigo-600"
+          >
+            Read our Code of Conduct
+            <Icon name="lucide:external-link" class="h-3.5 w-3.5" />
+          </a>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+</PageLayout>

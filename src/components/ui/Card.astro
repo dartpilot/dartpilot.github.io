@@ -1,0 +1,34 @@
+---
+interface Props {
+  class?: string;
+  hover?: boolean;
+  padding?: 'sm' | 'md' | 'lg';
+}
+
+const {
+  class: className = '',
+  hover = true,
+  padding = 'md',
+} = Astro.props;
+
+const paddings = {
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+};
+
+const hoverClass = hover
+  ? 'hover:-translate-y-1 hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-600'
+  : '';
+---
+
+<div
+  class:list={[
+    'rounded-2xl border border-zinc-200 bg-white transition-all duration-200 dark:border-zinc-800 dark:bg-zinc-900',
+    paddings[padding],
+    hoverClass,
+    className,
+  ]}
+>
+  <slot />
+</div>

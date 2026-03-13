@@ -1,0 +1,110 @@
+---
+title: "Getting Started with Flutter BLoC Pattern"
+description: "A practical guide to state management with BLoC pattern, use cases, and clean architecture in Flutter."
+date: 2026-03-08
+author: "Mehmet Cevheri BOZOGLAN"
+tags: ["tutorial", "architecture"]
+---
+
+The BLoC (Business Logic Component) pattern is one of the most popular state management solutions in Flutter. In this guide, we'll walk through how our template implements it with clean architecture.
+
+## The Pattern: Event → BLoC → State → UI
+
+Every feature in our template follows this flow:
+
+1. **UI** dispatches an **Event**
+2. **BLoC** processes the event using a **Use Case**
+3. **Use Case** calls a **Repository** (via interface)
+4. **BLoC** emits a new **State**
+5. **UI** rebuilds based on the new state
+
+## Example: Login Flow
+
+### 1. Define Events
+
+```dart
+abstract class LoginEvent extends Equatable {
+  const LoginEvent();
+}
+
+class LoginSubmitted extends LoginEvent {
+  final String username;
+  final String password;
+
+  const LoginSubmitted({required this.username, required this.password});
+
+  @override
+  List<Object> get props => [username, password];
+}
+```
+
+### 2. Define States
+
+```dart
+enum LoginStatus { initial, loading, success, failure }
+
+class LoginState extends Equatable {
+  final LoginStatus status;
+  final String? error;
+
+  const LoginState({this.status = LoginStatus.initial, this.error});
+
+  LoginState copyWith({LoginStatus? status, String? error}) {
+    return LoginState(
+      status: status ?? this.status,
+      error: error ?? this.error,
+    );
+  }
+
+  @override
+  List<Object?> get props => [status, error];
+}
+```
+
+### 3. Implement the BLoC
+
+```dart
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final AuthenticateUserUseCase _authenticateUser;
+
+  LoginBloc({required AuthenticateUserUseCase authenticateUser})
+      : _authenticateUser = authenticateUser,
+        super(const LoginState()) {
+    on<LoginSubmitted>(_onSubmitted);
+  }
+
+  Future<void> _onSubmitted(
+    LoginSubmitted event, Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(status: LoginStatus.loading));
+    final result = await _authenticateUser(
+      AuthRequest(username: event.username, password: event.password),
+    );
+    result.when(
+      success: (_) => emit(state.copyWith(status: LoginStatus.success)),
+      failure: (error) => emit(state.copyWith(
+        status: LoginStatus.failure, error: error.message,
+      )),
+    );
+  }
+}
+```
+
+## Why Use Cases?
+
+Use cases sit between the BLoC and repository, encapsulating a single business operation. This makes your code:
+
+- **Testable** — mock the use case, not the repository
+- **Reusable** — same use case across multiple BLoCs
+- **Clear** — each class has one responsibility
+
+## Try It Yourself
+
+Clone our template and explore the complete implementation:
+
+```bash
+git clone https://github.com/dartpilot/flutter-enterprise-starter.git
+fvm flutter test  # Run 472+ tests
+```
+
+Check the [project page](/projects/flutter-enterprise-starter/) for the full feature list.

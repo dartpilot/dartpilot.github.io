@@ -1,0 +1,102 @@
+---
+import { Icon } from 'astro-icon/components';
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeading from '../../components/ui/SectionHeading.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+import ScrollReveal from '../../components/ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+import { SITE } from '../../lib/constants';
+
+const locale = getLocale(Astro.url);
+
+const resources = [
+  {
+    title: 'Getting Started',
+    description: 'Clone the repo, install dependencies, and run your first build in under a minute.',
+    icon: 'lucide:rocket',
+    href: '/projects/flutter-enterprise-starter/',
+    internal: true,
+  },
+  {
+    title: 'DeepWiki',
+    description: t('docs.deepwikiDesc', locale),
+    icon: 'lucide:brain',
+    href: 'https://deepwiki.com/dartpilot/flutter-enterprise-starter',
+    internal: false,
+  },
+  {
+    title: 'Architecture Guide',
+    description: 'Understand the feature-first clean architecture, layer boundaries, and dependency rules.',
+    icon: 'lucide:blocks',
+    href: `${SITE.github.repo}/blob/main/docs/architecture-migration_en.md`,
+    internal: false,
+  },
+  {
+    title: 'Contributing Guide',
+    description: 'Learn how to fork, develop, test, and submit pull requests to the project.',
+    icon: 'lucide:git-pull-request',
+    href: `${SITE.github.repo}/blob/main/CONTRIBUTING.md`,
+    internal: false,
+  },
+  {
+    title: 'Design System',
+    description: '14+ reusable components, theme tokens, responsive shell, and accessibility patterns.',
+    icon: 'lucide:palette',
+    href: `${SITE.github.repo}/blob/main/docs/flutter-modern-ui-design-guide.md`,
+    internal: false,
+  },
+  {
+    title: 'Release Notes',
+    description: 'Changelog and release history for every version of the template.',
+    icon: 'lucide:file-text',
+    href: `${SITE.github.repo}/blob/main/docs/RELEASE_NOTES.md`,
+    internal: false,
+  },
+];
+---
+
+<PageLayout title="Documentation — dartpilot" description="Guides, references, and resources to help you build with dartpilot templates.">
+  <section class="pt-32 pb-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <ScrollReveal>
+        <SectionHeading
+          title={t('docs.title', locale)}
+          subtitle={t('docs.subtitle', locale)}
+        />
+      </ScrollReveal>
+
+      <div class="mx-auto max-w-4xl grid gap-4 sm:grid-cols-2">
+        {resources.map((resource, i) => (
+          <ScrollReveal delay={i * 80}>
+            <a
+              href={resource.href}
+              target={resource.internal ? undefined : '_blank'}
+              rel={resource.internal ? undefined : 'noopener noreferrer'}
+              class="block h-full"
+            >
+              <Card class="h-full group">
+                <div class="flex items-start gap-4">
+                  <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-indigo-50 text-indigo-500 dark:bg-indigo-950/50 dark:text-indigo-400">
+                    <Icon name={resource.icon} class="h-5 w-5" />
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-zinc-900 dark:text-white group-hover:text-indigo-500 transition-colors flex items-center gap-1.5">
+                      {resource.title}
+                      {!resource.internal && (
+                        <Icon name="lucide:external-link" class="h-3.5 w-3.5 text-zinc-400" />
+                      )}
+                    </h3>
+                    <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+                      {resource.description}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </a>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+</PageLayout>

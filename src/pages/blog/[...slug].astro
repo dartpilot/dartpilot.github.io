@@ -1,0 +1,62 @@
+---
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import Badge from '../../components/ui/Badge.astro';
+import { Icon } from 'astro-icon/components';
+import { formatDate, readingTime } from '../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<PageLayout
+  title={`${post.data.title} — dartpilot`}
+  description={post.data.description}
+  ogImage={post.data.ogImage}
+>
+  <article class="mx-auto max-w-3xl px-6 py-32">
+    <header class="mb-12">
+      <div class="mb-4 flex flex-wrap items-center gap-3 text-sm text-zinc-500 dark:text-zinc-400">
+        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+        {post.data.tags.length > 0 && (
+          <>
+            <span>&middot;</span>
+            <div class="flex gap-2">
+              {post.data.tags.map((tag: string) => (
+                <Badge variant="indigo">{tag}</Badge>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <h1 class="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-5xl">
+        {post.data.title}
+      </h1>
+      {post.data.description && (
+        <p class="mt-4 text-lg text-zinc-600 dark:text-zinc-400">{post.data.description}</p>
+      )}
+    </header>
+
+    <div class="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-indigo-500 prose-a:no-underline hover:prose-a:underline prose-code:before:content-none prose-code:after:content-none">
+      <Content />
+    </div>
+
+    <footer class="mt-16 border-t border-zinc-200 pt-8 dark:border-zinc-800">
+      <a
+        href="/blog/"
+        class="inline-flex items-center gap-2 text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-400"
+      >
+        <Icon name="lucide:arrow-left" class="h-4 w-4" />
+        Back to blog
+      </a>
+    </footer>
+  </article>
+</PageLayout>

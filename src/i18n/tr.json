@@ -1,0 +1,17 @@
+{
+  "site": {
+    "title": "dartpilot — Flutter/Dart Açık Kaynak",
+    "description": "Flutter/Dart ekosistemi için açık kaynak şablonlar ve araçlar. Üretime hazır, temiz mimari, BLoC pattern."
+  },
+  "nav": {
+    "projects": "Projeler",
+    "docs": "Dokümantasyon",
+    "community": "Topluluk",
+    "blog": "Blog",
+    "github": "GitHub",
+    "toggleTheme": "Tema değiştir",
+    "toggleMenu": "Menü aç/kapat",
+    "skipToContent": "İçeriğe geç",
+    "language": "Dil"
+  }
+}

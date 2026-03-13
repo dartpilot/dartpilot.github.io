@@ -1,0 +1,99 @@
+---
+import { Icon } from 'astro-icon/components';
+import Card from '../ui/Card.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ScrollReveal from '../ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+
+const locale = getLocale(Astro.url);
+
+const features = [
+  {
+    key: 'architecture',
+    icon: 'lucide:blocks',
+    size: 'large' as const,
+    hasImage: true,
+  },
+  {
+    key: 'bloc',
+    icon: 'lucide:boxes',
+    size: 'medium' as const,
+  },
+  {
+    key: 'auth',
+    icon: 'lucide:shield-check',
+    size: 'medium' as const,
+  },
+  {
+    key: 'responsive',
+    icon: 'lucide:monitor-smartphone',
+    size: 'medium' as const,
+  },
+  {
+    key: 'i18n',
+    icon: 'lucide:languages',
+    size: 'small' as const,
+  },
+  {
+    key: 'mock',
+    icon: 'lucide:database',
+    size: 'small' as const,
+  },
+  {
+    key: 'cicd',
+    icon: 'lucide:git-branch',
+    size: 'small' as const,
+  },
+];
+---
+
+<section class="py-20 sm:py-28">
+  <div class="mx-auto max-w-7xl px-6">
+    <ScrollReveal>
+      <SectionHeading
+        title={t('features.title', locale)}
+      />
+    </ScrollReveal>
+
+    <div class="grid gap-4 md:grid-cols-3 lg:grid-cols-4">
+      {features.map((feature, i) => (
+        <ScrollReveal
+          class:list={[
+            feature.size === 'large' ? 'md:col-span-2 lg:col-span-2 md:row-span-2' : '',
+            feature.size === 'medium' ? 'md:col-span-1' : '',
+            feature.size === 'small' ? 'md:col-span-1' : '',
+          ]}
+          delay={i * 80}
+        >
+          <Card class="h-full" padding={feature.size === 'large' ? 'lg' : 'md'}>
+            <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-50 text-indigo-500 dark:bg-indigo-950/50 dark:text-indigo-400">
+              <Icon name={feature.icon} class="h-5 w-5" />
+            </div>
+            <h3 class:list={[
+              'mt-4 font-bold text-zinc-900 dark:text-white',
+              feature.size === 'large' ? 'text-xl' : 'text-base',
+            ]}>
+              {t(`features.${feature.key}`, locale)}
+            </h3>
+            <p class:list={[
+              'mt-2 text-zinc-500 dark:text-zinc-400',
+              feature.size === 'large' ? 'text-base' : 'text-sm',
+            ]}>
+              {t(`features.${feature.key}Desc`, locale)}
+            </p>
+            {feature.hasImage && (
+              <div class="mt-6 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-700">
+                <img
+                  src="/images/architecture/high-level-architecture.svg"
+                  alt="Architecture Diagram"
+                  class="w-full dark:invert dark:brightness-90"
+                  loading="lazy"
+                />
+              </div>
+            )}
+          </Card>
+        </ScrollReveal>
+      ))}
+    </div>
+  </div>
+</section>

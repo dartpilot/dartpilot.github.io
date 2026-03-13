@@ -1,0 +1,66 @@
+---
+title: "Migrating to Feature-First Clean Architecture"
+description: "How we restructured our Flutter template from a layered architecture to feature-first clean boundaries — and why."
+date: 2026-03-10
+author: "Mehmet Cevheri BOZOGLAN"
+tags: ["architecture", "tutorial"]
+---
+
+In early 2026, we completed a full architectural migration of our Flutter template from a traditional layered approach to **feature-first clean boundaries**. Here's what we learned.
+
+## The Problem with Layered Architecture
+
+Our original structure looked like this:
+
+```
+lib/
+├── data/
+│   ├── models/
+│   └── repositories/
+├── presentation/
+│   ├── pages/
+│   └── widgets/
+└── utils/
+```
+
+This worked fine for small apps, but as features grew, we experienced:
+
+- **Cross-cutting dependencies** — changing one feature meant touching files across multiple directories
+- **Poor discoverability** — finding all files related to a feature required searching across the entire tree
+- **Merge conflicts** — multiple developers working on different features would conflict in shared directories
+
+## The Feature-First Approach
+
+Our new structure groups everything by feature:
+
+```
+lib/
+├── features/
+│   └── auth/
+│       ├── application/   # BLoCs & Use Cases
+│       ├── data/           # Repos & Models
+│       ├── domain/         # Interfaces & Entities
+│       ├── navigation/     # Routes
+│       └── presentation/   # Pages & Widgets
+├── shared/                 # Cross-feature code
+├── core/                   # Foundation (errors, logging)
+└── infrastructure/         # HTTP, storage, config
+```
+
+## Key Principles
+
+1. **Features don't import from other features** — use `shared/` for cross-cutting concerns
+2. **Use cases mediate between BLoC and repository** — keeping business logic testable
+3. **Domain layer defines interfaces** — data layer implements them
+4. **Dependency injection wires everything** — `app/di/` manages the object graph
+
+## Results
+
+After the migration:
+
+- **472+ tests** passing with zero failures
+- **Clear ownership** — each feature is self-contained
+- **Faster onboarding** — new developers find code intuitively
+- **Parallel development** — teams can work on features independently
+
+Read the full migration guide in our [documentation](/docs/).

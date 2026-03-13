@@ -1,0 +1,65 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import ScrollReveal from '../ui/ScrollReveal.astro';
+import { t, getLocale } from '../../i18n/utils';
+
+const locale = getLocale(Astro.url);
+
+const codeSnippet = `// Feature-First Clean Architecture with BLoC + Use Cases
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  final AuthenticateUserUseCase _authenticateUser;
+
+  LoginBloc({required AuthenticateUserUseCase authenticateUser})
+      : _authenticateUser = authenticateUser,
+        super(const LoginState()) {
+    on<LoginSubmitted>(_onSubmitted);
+  }
+
+  Future<void> _onSubmitted(
+    LoginSubmitted event, Emitter<LoginState> emit,
+  ) async {
+    emit(state.copyWith(status: LoginStatus.loading));
+
+    final result = await _authenticateUser(
+      AuthRequest(username: event.username, password: event.password),
+    );
+
+    result.when(
+      success: (token) => emit(state.copyWith(
+        status: LoginStatus.success, token: token,
+      )),
+      failure: (error) => emit(state.copyWith(
+        status: LoginStatus.failure, error: error.message,
+      )),
+    );
+  }
+}`;
+---
+
+<section class="py-20 sm:py-28 bg-zinc-50 dark:bg-zinc-900/50">
+  <div class="mx-auto max-w-7xl px-6">
+    <ScrollReveal>
+      <SectionHeading title={t('codePreview.title', locale)} />
+    </ScrollReveal>
+
+    <ScrollReveal>
+      <div class="mx-auto max-w-4xl">
+        <div class="overflow-hidden rounded-2xl border border-zinc-200 shadow-2xl dark:border-zinc-700">
+          <!-- Editor Header -->
+          <div class="flex items-center gap-2 border-b border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-700 dark:bg-zinc-900">
+            <div class="flex gap-1.5">
+              <div class="h-3 w-3 rounded-full bg-red-400" />
+              <div class="h-3 w-3 rounded-full bg-yellow-400" />
+              <div class="h-3 w-3 rounded-full bg-green-400" />
+            </div>
+            <span class="ml-2 text-xs text-zinc-500 dark:text-zinc-400">login_bloc.dart</span>
+          </div>
+          <!-- Code -->
+          <div class="bg-zinc-900 p-6 overflow-x-auto">
+            <pre class="!bg-transparent !p-0"><code class="text-sm leading-relaxed text-zinc-300">{codeSnippet}</code></pre>
+          </div>
+        </div>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>

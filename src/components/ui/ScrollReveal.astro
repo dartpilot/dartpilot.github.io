@@ -1,0 +1,46 @@
+---
+interface Props {
+  class?: string;
+  animation?: 'fade-in-up' | 'fade-in' | 'slide-in-left';
+  delay?: number;
+}
+
+const { class: className = '', animation = 'fade-in-up', delay = 0 } = Astro.props;
+---
+
+<div
+  class:list={['scroll-reveal', className]}
+  data-animation={animation}
+  style={delay > 0 ? `animation-delay: ${delay}ms` : undefined}
+>
+  <slot />
+</div>
+
+<script>
+  function initScrollReveal() {
+    const reveals = document.querySelectorAll('.scroll-reveal');
+    if (!reveals.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const animation = el.dataset.animation || 'fade-in-up';
+            el.classList.add(`animate-${animation}`);
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    reveals.forEach((el) => {
+      (el as HTMLElement).style.opacity = '0';
+      observer.observe(el);
+    });
+  }
+
+  initScrollReveal();
+  document.addEventListener('astro:after-swap', initScrollReveal);
+</script>
